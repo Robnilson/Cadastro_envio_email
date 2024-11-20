@@ -3,6 +3,7 @@ package com.ms.user.controllers;
 
 import com.ms.user.dtos.UserRecordDto;
 import com.ms.user.models.UserModel;
+import com.ms.user.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
