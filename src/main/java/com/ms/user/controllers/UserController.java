@@ -10,18 +10,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
 
+@RestController
 public class UserController {
 
-        @PostMapping("/users")
-        public ResponseEntity<UserModel>saveUser(@RequestBody @Valid UserRecordDto userRecordDto ) {
+    final UserService userService;
 
-            var userModel = new UserModel();
-            BeanUtils.copyProperties(userRecordDto, userModel);
-            return ResponseEntity.status(HttpStatus.CREATED).body();
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
+    @PostMapping("/users")
+    public ResponseEntity<UserModel> saveUser(@RequestBody @Valid UserRecordDto userRecordDto) {
+        var userModel = new UserModel();
+        BeanUtils.copyProperties(userRecordDto, userModel);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(userModel));
+    }
 
-        }
 }
